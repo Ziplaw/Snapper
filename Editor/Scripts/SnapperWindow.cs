@@ -84,7 +84,7 @@ namespace Snapper
 			_scrollViewContainer.Clear( );
 			var sceneAssetGUID = AssetDatabase.AssetPathToGUID( SceneManager.GetActiveScene( ).path );
 
-			if ( !Directory.Exists( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}" ) ) Directory.CreateDirectory( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}" );
+			if ( !Directory.Exists( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}" ) ) return;
 
 			var files = Directory.GetFiles( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}", "*.asset" );
 
