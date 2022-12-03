@@ -1,0 +1,17 @@
+{
+    "name": "com.ziplaw.snapper",
+    "version": "1.0.0",
+    "displayName": "Snapper",
+    "description": "This is a workflow tool that let's you take snaps of your scenes to quickly navigate through them",
+    "unity": "2021.3",
+    "documentationUrl": "https://ziplaw.dev/",
+   "keywords": [
+      "Snapper",
+      "Snap"
+    ],
+    "author": {
+      "name": "Ziplaw",
+      "email": "ziplaw@ziplaw.dev",
+      "url": "https://ziplaw.dev/"
+    }
+  }

@@ -1,0 +1,208 @@
+.snap-button {
+    background-image: url('project://database/Assets/Snapper/Editor/Resources/Textures/white_pixel.png?fileID=2800000&guid=65ae6d49d78561f409c862d12f152573&type=3#white_pixel');
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    flex-direction: column-reverse;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    transition-duration: 0.1s;
+    -unity-background-image-tint-color: rgb(188, 188, 188);
+    flex-grow: 1;
+    width: 125px;
+    height: 125px;
+}
+
+.snap-button:inactive {
+    background-image: url('project://database/Assets/Snapper/Editor/Resources/Textures/white_pixel.png?fileID=2800000&guid=65ae6d49d78561f409c862d12f152573&type=3#white_pixel');
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    flex-direction: column-reverse;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    transition-duration: 0.1s;
+    -unity-background-image-tint-color: rgb(188, 188, 188);
+    border-bottom-width: 3px;
+    border-right-width: 3px;
+    border-left-color: rgba(0, 0, 0, 0.16);
+    border-right-color: rgba(0, 0, 0, 0.16);
+    border-top-color: rgba(0, 0, 0, 0.16);
+    border-bottom-color: rgba(0, 0, 0, 0.16);
+}
+
+.snap-button-label {
+    white-space: normal;
+    color: rgb(61, 187, 151);
+    -unity-text-outline-color: rgb(0, 0, 0);
+    text-shadow: 0.5px 0.5px 0 rgb(0, 0, 0);
+    -unity-text-align: upper-center;
+    -unity-font-definition: url('project://database/Assets/Snapper/Editor/Fonts/Comfortaa-VariableFont_wght%20SDF.asset?fileID=11400000&guid=30b498c13bca58a45878d6d77b933685&type=2#Comfortaa-VariableFont_wght SDF');
+    font-size: 14px;
+}
+
+.snap-button:focus {
+    background-image: url('project://database/Assets/Snapper/Editor/Resources/Textures/white_pixel.png?fileID=2800000&guid=65ae6d49d78561f409c862d12f152573&type=3#white_pixel');
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    flex-direction: column-reverse;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    scale: 1.025 1.025;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}
+
+.snap-button:hover {
+    background-image: url('project://database/Assets/Snapper/Editor/Resources/Textures/white_pixel.png?fileID=2800000&guid=65ae6d49d78561f409c862d12f152573&type=3#white_pixel');
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    flex-direction: column-reverse;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    -unity-background-image-tint-color: rgb(129, 180, 255);
+    scale: 1.05 1.05;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(97, 136, 192);
+    border-right-color: rgb(97, 136, 192);
+    border-top-color: rgb(97, 136, 192);
+    border-bottom-color: rgb(97, 136, 192);
+}
+
+.snapper-container-visible {
+    padding-top: 5px;
+}
+
+.snapper-container-invisible {
+    translate: 0 85px;
+    margin-top: -81px;
+}
+
+.edit-button {
+    width: 30px;
+    height: 30px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.edit-button-active {
+    width: 20px;
+    height: 20px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+}
+
+.settings-button-inactive {
+    translate: 0 -26px;
+    transition-duration: 0.1s, 0s;
+    opacity: 0;
+    display: none;
+    transition-property: all, display;
+}
+
+.label-container-general > #snap-textfield > #unity-text-input {
+    -unity-text-align: middle-center;
+    -unity-font-definition: url('project://database/Assets/Snapper/Editor/Fonts/Comfortaa-VariableFont_wght%20SDF.asset?fileID=11400000&guid=30b498c13bca58a45878d6d77b933685&type=2#Comfortaa-VariableFont_wght SDF');
+    color: rgb(61, 187, 151);
+}
+
+.label-container-normal > #snap-label {
+    display: flex;
+}
+
+.label-container-normal > #snap-textfield {
+    display: none;
+}
+
+.label-container-editmode > #snap-label {
+    display: none;
+}
+
+.label-container-editmode > #snap-textfield {
+    display: flex;
+}
+
+.snapper-title-label {
+    -unity-text-align: upper-center;
+    font-size: 33px;
+    background-color: rgba(255, 255, 255, 0.14);
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-color: rgba(255, 255, 255, 0.26);
+    border-left-width: 0;
+    border-right-width: 2px;
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    border-right-color: rgba(255, 255, 255, 0.26);
+    -unity-font-definition: url('project://database/Assets/Snapper/Editor/Fonts/FugazOne-Regular%20SDF.asset?fileID=11400000&guid=38ced8bbde340c5469bb82d010a9e05e&type=2#FugazOne-Regular SDF');
+    color: rgb(92, 219, 178);
+    text-shadow: 2px 1px 1px rgba(35, 60, 50, 0.61);
+    border-left-color: rgba(255, 255, 255, 0.26);
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.snapper-title-label:hover {
+    color: rgba(156, 231, 207, 255);
+    text-shadow: 2.5px 1.5px 2px rgba(35, 60, 50, 0.61);
+    border-right-color: rgba(92, 219, 178, 0.26);
+    border-bottom-color: rgba(92, 219, 178, 0.26);
+    background-color: rgba(219, 219, 219, 0.14);
+}

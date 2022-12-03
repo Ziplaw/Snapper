@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" MemoryProfiler="Unity.MemoryProfiler.Editor" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Snapper/Editor/USS/SnapperWindow.uss?fileID=7433441132597879392&amp;guid=c60cbf82d1ee2244a94e82cdca3d31d0&amp;type=3#SnapperWindow" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.2);">
+        <ui:VisualElement>
+            <ui:Label text="Snapper" display-tooltip-when-elided="true" class="snapper-title-label" style="transition-duration: 0.175s;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; flex-shrink: 1;">
+            <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" style="flex-direction: row; flex-grow: 1;">
+                <ui:VisualElement name="scrollview-container" style="flex-direction: row; flex-wrap: wrap; flex-grow: 1;" />
+            </ui:ScrollView>
+        </ui:VisualElement>
+        <ui:VisualElement name="new-snapper-container" class="snapper-container-visible snapper-container-invisible" style="transition-duration: 0.25s; transition-timing-function: ease-in-out-cubic; flex-shrink: 0;">
+            <ui:Button text="Create New Snap" display-tooltip-when-elided="true" binding-path="snapButton" name="snapper-button" style="height: 36px; font-size: 19px; justify-content: center; align-items: center; -unity-font-definition: url(&apos;project://database/Assets/Snapper/Editor/Fonts/Comfortaa-VariableFont_wght%20SDF.asset?fileID=11400000&amp;guid=30b498c13bca58a45878d6d77b933685&amp;type=2#Comfortaa-VariableFont_wght SDF&apos;); color: rgb(126, 229, 197);">
+                <ui:VisualElement style="width: 20px; height: 20px; translate: -100px 0; background-image: url(&apos;project://database/Assets/Snapper/Editor/Resources/Textures/snap.png?fileID=2800000&amp;guid=99636698c19bbd742b77748b2c418f2b&amp;type=3#snap&apos;);" />
+            </ui:Button>
+            <ui:VisualElement name="create-new-snap" style="margin-top: 7px;">
+                <ui:TextField picking-mode="Ignore" label="Snap Name" text="New Snap" binding-path="snapName" name="snap-name" />
+                <uie:Vector3Field label="Camera Position" binding-path="camPos" picking-mode="Ignore" name="camera-position" class="disabled" />
+                <uie:Vector3Field label="Camera Rotation" picking-mode="Ignore" binding-path="camRot" name="camera-rotation" class="disabled" />
+                <ui:Button text="Snap!" display-tooltip-when-elided="true" name="snap-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
