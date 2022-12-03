@@ -214,13 +214,4 @@ namespace Snapper
 			}
 		}
 	}
-
-	public sealed class AssetManager : AssetPostprocessor
-	{
-		public static void OnPostprocessAllAssets( string[] importedAssets, string[] deletedAssets, string[] movedAssets,
-												   string[] movedFromAssetPaths )
-		{
-			foreach ( var deletedAsset in deletedAssets ) Debug.Log( deletedAsset );
-		}
-	}
 }
