@@ -82,7 +82,9 @@ namespace Snapper
 
 		private static void UpdateScrollViewContainer( )
 		{
-			_scrollViewContainer?.Clear( );
+			if ( !HasOpenInstances<SnapperWindow>( ) ) return;
+
+			_scrollViewContainer.Clear( );
 			var sceneAssetGUID = AssetDatabase.AssetPathToGUID( SceneManager.GetActiveScene( ).path );
 
 			if ( !Directory.Exists( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}" ) ) return;
