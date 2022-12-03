@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,7 +23,7 @@ namespace Snapper
 
 		private static VisualElement _scrollViewContainer;
 		private static bool _snapMenuActive;
-		internal static string RelativePackagePath;
+		private static string _relativePackagePath;
 
 		private Vector3 _camPos;
 		private Vector3 _camRot;
@@ -30,11 +31,11 @@ namespace Snapper
 		private VisualElement _createNewSnapElement;
 		private VisualElement _newSnapperContainer;
 		private string _snapName;
+		internal static string RelativePackagePath => _relativePackagePath ??= AssetDatabaseExtensions.GetDirectoryOfScript<SnapperWindow>( ).Replace( @"Editor\Scripts", string.Empty );
 		public event Action<SnapButton> snapButtonElementClicked;
 
 		public void CreateGUI( )
 		{
-			RelativePackagePath = AssetDatabaseExtensions.GetDirectoryOfScript<SnapperWindow>( ).Replace( @"Editor\Scripts", string.Empty );
 			var snapperWindowTreePath = $@"{RelativePackagePath}Editor/UIDocuments/SnapperWindow.uxml";
 			var root = rootVisualElement;
 
@@ -61,7 +62,7 @@ namespace Snapper
 			// }
 
 			EditorApplication.projectChanged += UpdateScrollViewContainer;
-			SceneManager.activeSceneChanged += ( _, _ ) => UpdateScrollViewContainer( );
+			EditorSceneManager.activeSceneChangedInEditMode += ( _, _ ) => UpdateScrollViewContainer( );
 		}
 
 		[MenuItem( "Tools/Snapper" )]
@@ -81,7 +82,7 @@ namespace Snapper
 
 		private static void UpdateScrollViewContainer( )
 		{
-			_scrollViewContainer.Clear( );
+			_scrollViewContainer?.Clear( );
 			var sceneAssetGUID = AssetDatabase.AssetPathToGUID( SceneManager.GetActiveScene( ).path );
 
 			if ( !Directory.Exists( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}" ) ) return;

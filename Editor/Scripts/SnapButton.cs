@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Search;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Snapper
@@ -36,7 +39,6 @@ namespace Snapper
 		public SnapButton( SnapData snapData )
 		{
 			_snapData = snapData;
-			;
 			AssetDatabase.LoadAssetAtPath<VisualTreeAsset>( $"{SnapperWindow.RelativePackagePath}Editor/UIDocuments/SnapButton.uxml" ).CloneTree( this );
 
 			if ( snapData )
@@ -160,6 +162,23 @@ namespace Snapper
 
 			var assetPath = AssetDatabase.GetAssetPath( _snapData );
 			AssetDatabase.DeleteAsset( assetPath );
+
+			var sceneAssetGUID = AssetDatabase.AssetPathToGUID( SceneManager.GetActiveScene( ).path );
+			var files = Directory.GetFiles( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}", "*.asset" );
+
+			if ( files.Length == 0 )
+			{
+				Directory.Delete( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}" );
+				File.Delete( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}.meta" );
+
+				if ( Directory.GetDirectories( $"{Application.dataPath}/SnapperData/Editor" ).Length == 0 )
+				{
+					Directory.Delete( $"{Application.dataPath}/SnapperData", true );
+					File.Delete( $"{Application.dataPath}/SnapperData.meta" );
+				}
+
+				AssetDatabase.Refresh( );
+			}
 		}
 
 		private void OnButtonClick( )
@@ -193,6 +212,15 @@ namespace Snapper
 			{
 				public UxmlTraits( ) => focusable.defaultValue = true;
 			}
+		}
+	}
+
+	public sealed class AssetManager : AssetPostprocessor
+	{
+		public static void OnPostprocessAllAssets( string[] importedAssets, string[] deletedAssets, string[] movedAssets,
+												   string[] movedFromAssetPaths )
+		{
+			foreach ( var deletedAsset in deletedAssets ) Debug.Log( deletedAsset );
 		}
 	}
 }
