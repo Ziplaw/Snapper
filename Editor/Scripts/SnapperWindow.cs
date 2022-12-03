@@ -15,25 +15,33 @@ namespace Snapper
 			CreateNew, Override, Ask
 		}
 
-		private const string k_newSnap = "New Snap";
 		private const string k_invisible = "snapper-container-invisible";
-		private const string k_OverrideTitle = "Snap Override";
-		private const string k_OverrideMessage = "You're about to create a Snap with an existing name, do you want to override the existing Snap, or create a new one?";
+		private const string k_newSnap = "New Snap";
+		private const string k_overrideMessage = "You're about to create a Snap with an existing name, do you want to override the existing Snap, or create a new one?";
+		private const string k_overrideTitle = "Snap Override";
 
 		private static VisualElement scrollViewContainer;
 		private static bool snapMenuActive;
-
-		public string snapName;
-		public Vector3 camPos;
-		public Vector3 camRot;
+		private static string relativePath;
+		private Vector3 camPos;
+		private Vector3 camRot;
 		private Button createNewSnapButton;
 		private VisualElement createNewSnapElement;
 		private VisualElement newSnapperContainer;
 
+		private string snapName;
+
 		public void CreateGUI( )
 		{
+			relativePath = AssetDatabaseExtensions.GetDirectoryOfScript<SnapperWindow>( );
+
+			// relativePath = Path.Combine( relativePath )
+			Debug.Log( relativePath );
+
+			return;
+
 			var root = rootVisualElement;
-			AssetDatabase.LoadAssetAtPath<VisualTreeAsset>( "Assets/Snapper/Editor/UIDocuments/SnapperWindow.uxml" )!.CloneTree( root );
+			AssetDatabase.LoadAssetAtPath<VisualTreeAsset>( "Packages/com.ziplaw.snapper/Assets/Snapper/Editor/UIDocuments/SnapperWindow.uxml" )!.CloneTree( root );
 			newSnapperContainer = root.Q<VisualElement>( "new-snapper-container" );
 			scrollViewContainer = root.Q<VisualElement>( "scrollview-container" );
 			UpdateScrollViewContainer( );
@@ -68,6 +76,14 @@ namespace Snapper
 			wnd.titleContent = new GUIContent( "Snapper" );
 		}
 
+		public static void TakeSnapshot( string snapName, VisualElement snapperContainer = null, CaptureType captureType = CaptureType.Ask )
+		{
+			SaveCameraView( SceneView.lastActiveSceneView, 1000, snapName, snapperContainer, captureType );
+			UpdateScrollViewContainer( );
+		}
+
+		public void OnSnapButtonClick( SnapButton snapButton ) => snapButtonElementClicked?.Invoke( snapButton );
+
 		private static void UpdateScrollViewContainer( )
 		{
 			scrollViewContainer.Clear( );
@@ -89,26 +105,6 @@ namespace Snapper
 					snapButton.Init( HasOpenInstances<SnapperWindow>( ) ? GetWindow<SnapperWindow>( ) : null );
 				}
 			}
-		}
-
-		public static void TakeSnapshot( string snapName, VisualElement snapperContainer = null, CaptureType captureType = CaptureType.Ask )
-		{
-			SaveCameraView( SceneView.lastActiveSceneView, 1000, snapName, snapperContainer, captureType );
-			UpdateScrollViewContainer( );
-		}
-
-		private void OnCameraRotationChange( ChangeEvent<Vector3> evt )
-		{
-			var sceneView = SceneView.lastActiveSceneView;
-			sceneView.rotation = Quaternion.Euler( evt.newValue );
-			sceneView.Repaint( );
-		}
-
-		private void OnCameraPositionChange( ChangeEvent<Vector3> evt )
-		{
-			var sceneView = SceneView.lastActiveSceneView;
-			sceneView.pivot = evt.newValue;
-			sceneView.Repaint( );
 		}
 
 		private void ToggleSnapMenu( )
@@ -150,7 +146,7 @@ namespace Snapper
 
 			if ( AssetDatabase.LoadAssetAtPath<SnapData>( snapDataPath ) )
 			{
-				if ( captureType == CaptureType.Ask ) captureType = EditorUtility.DisplayDialog( k_OverrideTitle, k_OverrideMessage, "Create a new one", "Override it", DialogOptOutDecisionType.ForThisSession, "OverrideOrCreateNewSnap" ) ? CaptureType.CreateNew : CaptureType.Override;
+				if ( captureType == CaptureType.Ask ) captureType = EditorUtility.DisplayDialog( k_overrideTitle, k_overrideMessage, "Create a new one", "Override it", DialogOptOutDecisionType.ForThisSession, "OverrideOrCreateNewSnap" ) ? CaptureType.CreateNew : CaptureType.Override;
 
 				if ( captureType == CaptureType.CreateNew )
 				{
@@ -177,6 +173,18 @@ namespace Snapper
 			snapperContainer?.AddToClassList( k_invisible );
 		}
 
-		public void OnSnapButtonClick( SnapButton snapButton ) => snapButtonElementClicked?.Invoke( snapButton );
+		private void OnCameraPositionChange( ChangeEvent<Vector3> evt )
+		{
+			var sceneView = SceneView.lastActiveSceneView;
+			sceneView.pivot = evt.newValue;
+			sceneView.Repaint( );
+		}
+
+		private void OnCameraRotationChange( ChangeEvent<Vector3> evt )
+		{
+			var sceneView = SceneView.lastActiveSceneView;
+			sceneView.rotation = Quaternion.Euler( evt.newValue );
+			sceneView.Repaint( );
+		}
 	}
 }
