@@ -36,7 +36,8 @@ namespace Snapper
 		public SnapButton( SnapData snapData )
 		{
 			_snapData = snapData;
-			AssetDatabase.LoadAssetAtPath<VisualTreeAsset>( "Assets/Snapper/Editor/UIDocuments/SnapButton.uxml" ).CloneTree( this );
+			;
+			AssetDatabase.LoadAssetAtPath<VisualTreeAsset>( $"{SnapperWindow.RelativePackagePath}Editor/UIDocuments/SnapButton.uxml" ).CloneTree( this );
 
 			if ( snapData )
 			{
@@ -90,7 +91,7 @@ namespace Snapper
 		{
 			_snapData.Name = _editModeTextField.value;
 			_snapData.Snapshot.name = _editModeTextField.value;
-			var assetPath = AssetDatabase.GetAssetPath( _snapData.GetInstanceID( ) );
+			var assetPath = AssetDatabase.GetAssetPath( _snapData );
 			AssetDatabase.RenameAsset( assetPath, _editModeTextField.value );
 			AssetDatabase.SaveAssets( );
 		}
@@ -186,20 +187,12 @@ namespace Snapper
 			}
 		}
 
-		#region Nested type: UxmlFactory
-
-		public new class UxmlFactory : UxmlFactory<SnapButton>
+		public new sealed class UxmlFactory : UxmlFactory<SnapButton>
 		{
-			#region Nested type: UxmlTraits
-
-			public class UxmlTraits : BindableElement.UxmlTraits
+			public sealed class UxmlTraits : BindableElement.UxmlTraits
 			{
 				public UxmlTraits( ) => focusable.defaultValue = true;
 			}
-
-			#endregion
 		}
-
-		#endregion
 	}
 }

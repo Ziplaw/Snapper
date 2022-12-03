@@ -20,43 +20,40 @@ namespace Snapper
 		private const string k_overrideMessage = "You're about to create a Snap with an existing name, do you want to override the existing Snap, or create a new one?";
 		private const string k_overrideTitle = "Snap Override";
 
-		private static VisualElement scrollViewContainer;
-		private static bool snapMenuActive;
-		private static string relativePath;
-		private Vector3 camPos;
-		private Vector3 camRot;
-		private Button createNewSnapButton;
-		private VisualElement createNewSnapElement;
-		private VisualElement newSnapperContainer;
+		private static VisualElement _scrollViewContainer;
+		private static bool _snapMenuActive;
+		internal static string RelativePackagePath;
 
-		private string snapName;
+		private Vector3 _camPos;
+		private Vector3 _camRot;
+		private Button _createNewSnapButton;
+		private VisualElement _createNewSnapElement;
+		private VisualElement _newSnapperContainer;
+		private string _snapName;
+		public event Action<SnapButton> snapButtonElementClicked;
 
 		public void CreateGUI( )
 		{
-			relativePath = AssetDatabaseExtensions.GetDirectoryOfScript<SnapperWindow>( ).Replace( @"Editor\Scripts", string.Empty );
-
-			// relativePath = Path.Combine( relativePath )
-			Debug.Log( relativePath );
-
-			return;
-
+			RelativePackagePath = AssetDatabaseExtensions.GetDirectoryOfScript<SnapperWindow>( ).Replace( @"Editor\Scripts", string.Empty );
+			var snapperWindowTreePath = $@"{RelativePackagePath}Editor/UIDocuments/SnapperWindow.uxml";
 			var root = rootVisualElement;
-			AssetDatabase.LoadAssetAtPath<VisualTreeAsset>( "Packages/com.ziplaw.snapper/Assets/Snapper/Editor/UIDocuments/SnapperWindow.uxml" )!.CloneTree( root );
-			newSnapperContainer = root.Q<VisualElement>( "new-snapper-container" );
-			scrollViewContainer = root.Q<VisualElement>( "scrollview-container" );
+
+			AssetDatabase.LoadAssetAtPath<VisualTreeAsset>( snapperWindowTreePath )!.CloneTree( root );
+			_newSnapperContainer = root.Q<VisualElement>( "new-snapper-container" );
+			_scrollViewContainer = root.Q<VisualElement>( "scrollview-container" );
 			UpdateScrollViewContainer( );
 
-			createNewSnapButton = root.Q<Button>( "snapper-button" );
-			createNewSnapButton.clicked += ToggleSnapMenu;
+			_createNewSnapButton = root.Q<Button>( "snapper-button" );
+			_createNewSnapButton.clicked += ToggleSnapMenu;
 
-			createNewSnapElement = root.Q<VisualElement>( "create-new-snap" );
+			_createNewSnapElement = root.Q<VisualElement>( "create-new-snap" );
 
-			createNewSnapElement.Q<TextField>( "snap-name" ); // no custom binding stuff
-			createNewSnapElement.Q<Vector3Field>( "camera-position" ).RegisterValueChangedCallback( OnCameraPositionChange );
-			createNewSnapElement.Q<Vector3Field>( "camera-rotation" ).RegisterValueChangedCallback( OnCameraRotationChange );
-			createNewSnapElement.Q<Button>( "snap-button" ).clicked += ( ) => { TakeSnapshot( snapName, newSnapperContainer ); };
+			_createNewSnapElement.Q<TextField>( "snap-name" ); // no custom binding stuff
+			_createNewSnapElement.Q<Vector3Field>( "camera-position" ).RegisterValueChangedCallback( OnCameraPositionChange );
+			_createNewSnapElement.Q<Vector3Field>( "camera-rotation" ).RegisterValueChangedCallback( OnCameraRotationChange );
+			_createNewSnapElement.Q<Button>( "snap-button" ).clicked += ( ) => { TakeSnapshot( _snapName, _newSnapperContainer ); };
 
-			newSnapperContainer.AddToClassList( k_invisible );
+			_newSnapperContainer.AddToClassList( k_invisible );
 
 			// foreach (var visualElement in createNewSnapElement.Children())
 			// {
@@ -67,10 +64,8 @@ namespace Snapper
 			SceneManager.activeSceneChanged += ( _, _ ) => UpdateScrollViewContainer( );
 		}
 
-		public event Action<SnapButton> snapButtonElementClicked;
-
 		[MenuItem( "Tools/Snapper" )]
-		public static void ShowExample( )
+		public static void ShowWindow( )
 		{
 			var wnd = GetWindow<SnapperWindow>( );
 			wnd.titleContent = new GUIContent( "Snapper" );
@@ -86,7 +81,7 @@ namespace Snapper
 
 		private static void UpdateScrollViewContainer( )
 		{
-			scrollViewContainer.Clear( );
+			_scrollViewContainer.Clear( );
 			var sceneAssetGUID = AssetDatabase.AssetPathToGUID( SceneManager.GetActiveScene( ).path );
 
 			if ( !Directory.Exists( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}" ) ) Directory.CreateDirectory( $"{Application.dataPath}/SnapperData/Editor/{sceneAssetGUID}" );
@@ -101,7 +96,7 @@ namespace Snapper
 
 				if ( asset )
 				{
-					scrollViewContainer.Add( snapButton );
+					_scrollViewContainer.Add( snapButton );
 					snapButton.Init( HasOpenInstances<SnapperWindow>( ) ? GetWindow<SnapperWindow>( ) : null );
 				}
 			}
@@ -109,20 +104,20 @@ namespace Snapper
 
 		private void ToggleSnapMenu( )
 		{
-			snapMenuActive = !snapMenuActive;
+			_snapMenuActive = !_snapMenuActive;
 
-			if ( snapMenuActive )
+			if ( _snapMenuActive )
 			{
 				var sceneView = SceneView.lastActiveSceneView;
 
-				snapName = k_newSnap;
-				camPos = sceneView.pivot;
-				camRot = sceneView.rotation.eulerAngles;
+				_snapName = k_newSnap;
+				_camPos = sceneView.pivot;
+				_camRot = sceneView.rotation.eulerAngles;
 
-				newSnapperContainer.RemoveFromClassList( k_invisible );
+				_newSnapperContainer.RemoveFromClassList( k_invisible );
 			}
 			else
-				newSnapperContainer.AddToClassList( k_invisible );
+				_newSnapperContainer.AddToClassList( k_invisible );
 
 			// SaveCameraView(cam, 1000);
 		}
