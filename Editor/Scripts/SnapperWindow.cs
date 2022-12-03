@@ -33,7 +33,7 @@ namespace Snapper
 
 		public void CreateGUI( )
 		{
-			relativePath = AssetDatabaseExtensions.GetDirectoryOfScript<SnapperWindow>( );
+			relativePath = AssetDatabaseExtensions.GetDirectoryOfScript<SnapperWindow>( ).Replace( @"Editor\Scripts", string.Empty );
 
 			// relativePath = Path.Combine( relativePath )
 			Debug.Log( relativePath );
